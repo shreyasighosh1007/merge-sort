@@ -1,0 +1,69 @@
+#include<stdio.h>
+void fractional(int weight[],int profit[],int ratio[],int c,int n )
+{
+	int w=0,pro=0,i=0,r;
+	while(i<n){
+	
+	if(weight[i]+w <= c)
+		{
+		w+=weight[i];
+		pro+=profit[i];
+		}
+		else
+		{
+			r=c-w;
+			pro=pro + r * ratio[i];
+			break;
+		}
+		i++;
+	}
+	printf("total_profit=%d",pro);
+	
+}
+int main()
+{
+	int weight[100],profit[100],ratio[100],i,j,n,temp,temp1,temp2,c;
+	printf("enter the size:");
+	scanf("%d",&n);
+	
+	printf("enter values:");
+	for(i=0;i<n;i++)
+	{
+	    scanf("%d",&profit[i]);
+        scanf("%d",&weight[i]);
+	    ratio[i]=profit[i]/weight[i];
+    }
+    for(i=0;i<n-1;i++)
+	{
+       for(j=0;j<n-i-1;j++)
+	   {
+       	if(ratio[j]<ratio[j+1])
+		   {
+	   		temp2=ratio[j];
+            temp=profit[j];
+       		temp1=weight[j];
+
+       	    ratio[j]=ratio[j+1];
+            profit[j]=profit[j+1];
+       	    weight[j]=weight[j+1];
+
+       		profit[j+1]=temp;
+       		weight[j+1]=temp1;
+       		ratio[j+1]=temp2;
+
+
+		   }
+       }
+
+	}
+	
+	printf("after sorting:\n");
+	for(i=0;i<n;i++)
+	{
+      printf(" %d\t  %d\t  %d\n",profit[i],weight[i],ratio[i]);
+}
+printf("enter the capacity:");
+	scanf("%d",&c);
+    fractional(weight,profit,ratio,c,n );
+
+}
